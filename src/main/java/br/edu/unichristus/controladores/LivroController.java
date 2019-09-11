@@ -3,6 +3,7 @@ package br.edu.unichristus.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,7 @@ import br.edu.unichristus.entidades.Livro;
 import br.edu.unichristus.repositorios.LivroRepository;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/livros")
 public class LivroController {
 
 	@Autowired
@@ -24,15 +25,25 @@ public class LivroController {
 	public List<Livro> buscarTodos() {
 		return repoLivro.findAll();
 	}
-	
+
 	@GetMapping("/livro/{id}")
 	public Livro buscarPeloID(@PathVariable Long id) {
 		return repoLivro.findById(id).get();
 	}
 
+	@GetMapping("/livro/titulo/{titulo}")
+	public Livro buscarPeloTitulo(@PathVariable String titulo) {
+		return repoLivro.findByTitulo(titulo);
+	}
+
 	@PostMapping("/novo")
 	public Livro salvar(@ModelAttribute Livro livro) {
 		return repoLivro.save(livro);
+	}
+
+	@DeleteMapping("/remove/{id}")
+	public void remover(@PathVariable Long id) {
+		repoLivro.deleteById(id);
 	}
 
 }

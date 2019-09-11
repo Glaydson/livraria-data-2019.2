@@ -6,4 +6,5 @@ import br.edu.unichristus.entidades.Livro;
 
 public interface LivroRepository extends JpaRepository<Livro, Long> {
 
+	public Livro findByTitulo(String titulo);
 }
